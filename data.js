@@ -9,7 +9,7 @@ window.SITE = {
   name: "BS. Hà Hiếu",
   sub: "Phẫu thuật tạo hình thẩm mỹ",
   doctor: "BS. Hà Hiếu",
-  spec: "Bác sĩ ngoại khoa · Tư vấn chuyên môn tạo hình thẩm mỹ",
+  spec: "Bác sĩ Chuyên khoa · Tư vấn chuyên môn tạo hình thẩm mỹ",
   phone: "",        // ví dụ: "0336 891 053"
   zalo: "",         // ví dụ: "0336891053"
   address: "",      // ví dụ: "Thành phố Hồ Chí Minh"
