@@ -22,7 +22,7 @@ window.SITE = {
    Cách nhanh nhất: vào trang Tính tiền → Dịch vụ → bấm "Xuất bảng giá công khai",
    rồi dán đoạn mã nhận được vào thay cho phần bên dưới. */
 window.PRICES = [
-  // { group: "Laser", name: "Laser toning điều trị nám", price: 1500000, unit: "buổi", note: "" },
+  {"group":"Da liễu","name":"Kem dưỡng HA Usolab","price":990000,"unit":"Hộp","note":""}
 ];
 
 /* 3. BÀI VIẾT KIẾN THỨC
