@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BS. Hà Hiếu · Thẩm mỹ & Kiến thức</title>
+<meta name="description" content="Kiến thức thẩm mỹ, bảng giá dịch vụ và tư vấn từ BS. Hà Hiếu, bác sĩ ngoại khoa chuyên ngành phẫu thuật tạo hình thẩm mỹ.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&family=Lexend:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+/* Bố cục: thanh trên cố định; khu công khai thoáng, khu tính tiền dạng bảng điều khiển. */
+:root{
+  --bg:#f3f6f6; --surface:#ffffff; --surface-2:#eef3f3; --ink:#15242a; --muted:#5b6d74; --line:#d9e3e5;
+  --accent:#0d6870; --accent-ink:#ffffff; --accent-soft:#dfeff0;
+  --good:#1d7548; --good-soft:#e2f3ea; --warn:#a96300; --warn-soft:#fbefdc; --bad:#b0281f; --bad-soft:#fbe5e3;
+  --font-display:'Lexend','Be Vietnam Pro',system-ui,sans-serif;
+  --font-body:'Be Vietnam Pro',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --r:10px; --shadow:0 1px 2px rgba(15,40,45,.06),0 4px 14px rgba(15,40,45,.05);
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0e1618; --surface:#152124; --surface-2:#1b2a2e; --ink:#e4edef; --muted:#93a7ad; --line:#26383c;
+  --accent:#5fc2ca; --accent-ink:#06282b; --accent-soft:#17363a;
+  --good:#6bd39b; --good-soft:#163428; --warn:#f0b35a; --warn-soft:#3a2b12; --bad:#ff8a80; --bad-soft:#3d1c1a;
+  --shadow:none; color-scheme:dark;}}
+:root[data-theme="dark"]{
+  --bg:#0e1618; --surface:#152124; --surface-2:#1b2a2e; --ink:#e4edef; --muted:#93a7ad; --line:#26383c;
+  --accent:#5fc2ca; --accent-ink:#06282b; --accent-soft:#17363a;
+  --good:#6bd39b; --good-soft:#163428; --warn:#f0b35a; --warn-soft:#3a2b12; --bad:#ff8a80; --bad-soft:#3d1c1a;
+  --shadow:none; color-scheme:dark;}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:15px;line-height:1.55}
+h1,h2,h3,h4{font-family:var(--font-display);line-height:1.25;margin:0;text-wrap:balance;font-weight:600}
+h1{font-size:30px} h2{font-size:22px} h3{font-size:17px} h4{font-size:15px}
+p{margin:0}
+a{color:var(--accent)}
+img{max-width:100%}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.num{font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)} .small{font-size:13px}
+
+header.top{position:sticky;top:0;z-index:20;background:var(--surface);border-bottom:1px solid var(--line)}
+.top-in{max-width:1120px;margin:0 auto;padding:10px 16px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.brand{display:flex;gap:10px;align-items:center;text-decoration:none;color:var(--ink)}
+.brand-mark{width:34px;height:34px;border-radius:9px;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-family:var(--font-display);font-weight:700;font-size:15px}
+.brand b{font-family:var(--font-display);font-size:16px;display:block}
+.brand span{font-size:12px;color:var(--muted)}
+nav.nav{display:flex;gap:4px;overflow-x:auto;margin-left:auto;align-items:center}
+nav.nav a{padding:7px 11px;border-radius:8px;text-decoration:none;color:var(--muted);white-space:nowrap;font-weight:500;font-size:14px}
+nav.nav a:hover{background:var(--surface-2);color:var(--ink)}
+nav.nav a.on{background:var(--accent-soft);color:var(--accent)}
+
+main{max-width:1120px;margin:0 auto;padding:22px 16px 50px;display:flex;flex-direction:column;gap:20px}
+.page-head{display:flex;gap:12px;align-items:flex-end;justify-content:space-between;flex-wrap:wrap}
+.page-head p{color:var(--muted);margin-top:4px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:12px;min-width:0}
+.card-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;display:flex;flex-direction:column;gap:2px}
+.tile .lab{font-size:13px;color:var(--muted)}
+.tile .val{font-family:var(--font-display);font-size:22px;font-weight:600;font-variant-numeric:tabular-nums}
+.tile.good .val{color:var(--good)} .tile.bad .val{color:var(--bad)}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.stack{display:flex;flex-direction:column;gap:10px}
+.spacer{flex:1}
+
+.btn{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:var(--surface);padding:8px 13px;border-radius:8px;cursor:pointer;font-weight:500;font-size:14px;text-decoration:none;color:var(--ink);white-space:nowrap}
+.btn:hover{background:var(--surface-2)}
+.btn.pri{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn.pri:hover{filter:brightness(1.07)}
+.btn.ghost{border-color:transparent;background:transparent}
+.btn.danger{color:var(--bad)}
+.btn.sm{padding:5px 9px;font-size:13px}
+.btn:disabled{opacity:.55;cursor:not-allowed}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{border:1px solid var(--line);background:var(--surface);padding:4px 11px;border-radius:999px;font-size:13px;cursor:pointer}
+.chip.on{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.pill{display:inline-flex;align-items:center;padding:2px 9px;border-radius:999px;font-size:12px;font-weight:600;white-space:nowrap}
+.pill.good{background:var(--good-soft);color:var(--good)} .pill.bad{background:var(--bad-soft);color:var(--bad)}
+.pill.warn{background:var(--warn-soft);color:var(--warn)} .pill.info{background:var(--accent-soft);color:var(--accent)} .pill.mute{background:var(--surface-2);color:var(--muted)}
+
+label.f{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--muted);font-weight:500;min-width:0}
+label.f.inline{flex-direction:row;align-items:center;gap:8px;color:var(--ink)}
+input[type=text],input[type=date],input[type=month],input[type=search],input[type=number],input[type=password],select,textarea{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:8px 10px;width:100%;min-width:0;color:var(--ink)}
+textarea{resize:vertical;min-height:70px}
+.fgrid{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.fgrid .full{grid-column:1/-1}
+
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{padding:9px 11px;text-align:left;border-bottom:1px solid var(--line);vertical-align:middle}
+th{font-size:12px;color:var(--muted);font-weight:600;background:var(--surface-2);white-space:nowrap}
+tr:last-child td{border-bottom:none}
+td.r,th.r{text-align:right;font-variant-numeric:tabular-nums}
+tbody tr.click{cursor:pointer} tbody tr.click:hover{background:var(--surface-2)}
+td input{padding:5px 7px}
+.list{display:flex;flex-direction:column}
+.li{display:flex;gap:12px;align-items:center;padding:10px 2px;border-bottom:1px solid var(--line)}
+.li:last-child{border-bottom:none}
+.li .main{flex:1;min-width:0} .li .t{font-weight:600} .li .s{font-size:13px;color:var(--muted)}
+.empty{padding:22px;text-align:center;color:var(--muted);border:1px dashed var(--line);border-radius:var(--r);background:var(--surface)}
+
+.hero{display:grid;grid-template-columns:1.4fr 1fr;gap:24px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:28px}
+.hero h1{font-size:32px}
+.hero .lead{font-size:16px;color:var(--muted);margin-top:10px;max-width:60ch}
+.hero-side{background:var(--accent-soft);border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:8px}
+.hero-side div{display:flex;gap:8px}
+.hero-side b{min-width:100px;white-space:nowrap;color:var(--accent);font-weight:600}
+@media (max-width:720px){.hero{grid-template-columns:1fr;padding:20px}.hero h1{font-size:26px}}
+.article-card{cursor:pointer;text-decoration:none;color:var(--ink)}
+.article-card:hover{border-color:var(--accent)}
+.article-card .tag{font-size:12px;color:var(--accent);font-weight:600}
+.prose{max-width:68ch;display:flex;flex-direction:column;gap:12px;font-size:16px}
+.prose h2{font-size:20px;margin-top:10px} .prose h3{font-size:17px;margin-top:6px}
+.prose ul{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:4px}
+.note-box{background:var(--warn-soft);border-radius:8px;padding:10px 12px;font-size:13px}
+.price-row{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px dashed var(--line)}
+.price-row:last-child{border-bottom:none}
+.price-row b{font-variant-numeric:tabular-nums;white-space:nowrap}
+.totals{display:grid;grid-template-columns:1fr auto;gap:4px 16px;font-size:14px;background:var(--surface-2);padding:12px 14px;border-radius:8px}
+.totals .r{text-align:right;font-variant-numeric:tabular-nums}
+.totals .big{font-weight:700;font-size:16px}
+.lock{max-width:380px;margin:40px auto}
+
+.ov{position:fixed;inset:0;background:rgba(8,20,24,.5);z-index:50;display:flex;align-items:flex-start;justify-content:center;padding:28px 12px;overflow-y:auto}
+.modal{background:var(--surface);border-radius:14px;width:100%;max-width:760px;display:flex;flex-direction:column;border:1px solid var(--line)}
+.modal.wide{max-width:960px}
+.modal-h{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--line);gap:10px}
+.modal-b{padding:18px;display:flex;flex-direction:column;gap:14px}
+.modal-f{padding:12px 18px;border-top:1px solid var(--line);display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}
+#toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:80;display:flex;flex-direction:column;gap:6px;align-items:center;pointer-events:none}
+#toast div{background:var(--ink);color:var(--bg);padding:9px 14px;border-radius:8px;font-size:14px}
+footer{max-width:1120px;margin:0 auto;padding:0 16px 30px;color:var(--muted);font-size:13px;display:flex;gap:12px;flex-wrap:wrap;justify-content:space-between}
+footer a{color:var(--muted)}
+.hide{display:none!important}
+
+/* In phiếu thu */
+#print{display:none}
+@media print{
+  body *{visibility:hidden}
+  #print,#print *{visibility:visible}
+  #print{display:block;position:absolute;left:0;top:0;width:100%;padding:10mm;color:#000;background:#fff;font-size:13px}
+  #print h2{font-size:18px;margin-bottom:2px} #print table{width:100%;border-collapse:collapse;margin:10px 0}
+  #print th,#print td{border-bottom:1px solid #999;padding:5px;background:none;color:#000}
+  #print .r{text-align:right}
+}
+</style>
+</head>
+<body>
+<header class="top"><div class="top-in">
+  <a class="brand" href="#home"><div class="brand-mark">HH</div><div><b id="brandName"></b><span id="brandSub"></span></div></a>
+  <nav class="nav" id="nav"></nav>
+</div></header>
+<main id="main"></main>
+<footer><span>Thông tin trên trang chỉ để tham khảo, không thay thế việc thăm khám trực tiếp với bác sĩ.</span><a href="#tinh-tien">Khu bác sĩ</a></footer>
+<div id="print"></div>
+<div id="toast" aria-live="polite"></div>
+
+<script src="data.js"></script>
+<script>
+/* ============ Tiện ích ============ */
+const SITE=window.SITE||{},PRICES=window.PRICES||[],ARTICLES=window.ARTICLES||[];
+const $=s=>document.querySelector(s);
+function h(tag,attrs,...kids){const el=document.createElement(tag);if(attrs)for(const[k,v]of Object.entries(attrs)){if(v==null||v===false)continue;
+  if(k.startsWith('on'))el.addEventListener(k.slice(2),v);else if(k==='class')el.className=v;else if(k==='value')el.value=v;else if(k==='checked')el.checked=!!v;else el.setAttribute(k,v===true?'':v);}
+  for(const c of kids.flat(Infinity)){if(c==null||c===false)continue;el.append(c instanceof Node?c:document.createTextNode(String(c)));}return el;}
+function toast(m){const t=h('div',null,m);$('#toast').append(t);setTimeout(()=>t.remove(),3000);}
+const fmt=n=>(Math.round(Number(n)||0)).toLocaleString('vi-VN')+' đ';
+const fmtShort=n=>{n=Number(n)||0;const a=Math.abs(n);if(a>=1e9)return (n/1e9).toFixed(1).replace('.0','')+' tỷ';if(a>=1e6)return (n/1e6).toFixed(1).replace('.0','')+' tr';if(a>=1e3)return Math.round(n/1e3)+'k';return String(Math.round(n));};
+function parseMoney(s){if(typeof s==='number')return s;s=String(s||'').toLowerCase().replace(/\s+/g,'').replace(/vnđ|vnd|đồng|đ$/g,'');if(!s)return 0;
+  let m=s.match(/^(\d+)(?:tr|triệu|m)(\d+)$/);if(m)return +m[1]*1e6+ +(m[2]+'000').slice(0,3)*1000;
+  m=s.match(/^(\d+)(?:k|nghìn|ngàn)(\d+)$/);if(m)return +m[1]*1000+ +(m[2]+'00').slice(0,3);
+  m=s.match(/^([\d.,]+)(k|nghìn|ngàn|tr|triệu|m|tỷ|ty)?$/);if(!m)return 0;let num=m[1],u=m[2];
+  if(u){num=parseFloat(num.replace(',','.'));return Math.round(num*({k:1e3,'nghìn':1e3,'ngàn':1e3,tr:1e6,'triệu':1e6,m:1e6,'tỷ':1e9,ty:1e9}[u]));}
+  if(/^\d{1,3}([.,]\d{3})+$/.test(num))return +num.replace(/[.,]/g,'');return Math.round(parseFloat(num.replace(',','.'))||0);}
+const today=()=>{const d=new Date();d.setMinutes(d.getMinutes()-d.getTimezoneOffset());return d.toISOString().slice(0,10);};
+const fmtDate=iso=>{if(!iso)return '';const[y,m,d]=iso.split('-');return `${d}/${m}/${y}`;};
+const monthOf=iso=>(iso||'').slice(0,7);
+const norm=s=>(s||'').toString().toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/đ/g,'d');
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+const LS={get(k,d){try{const v=localStorage.getItem('bshh:'+k);return v==null?d:JSON.parse(v);}catch(e){return d;}},set(k,v){try{localStorage.setItem('bshh:'+k,JSON.stringify(v));return true;}catch(e){toast('Trình duyệt không cho lưu dữ liệu');return false;}}};
+const SS={get(k){try{return sessionStorage.getItem('bshh:'+k);}catch(e){return null;}},set(k,v){try{sessionStorage.setItem('bshh:'+k,v);}catch(e){}}};
+function hashPin(p){let x=5381;for(const c of 'bshh|'+p)x=((x<<5)+x+c.charCodeAt(0))>>>0;return x.toString(36);}
+async function copyText(t){try{await navigator.clipboard.writeText(t);toast('Đã sao chép');}catch(e){const ta=h('textarea',{style:'position:fixed;opacity:0'},t);document.body.append(ta);ta.select();try{document.execCommand('copy');toast('Đã sao chép');}catch(_){toast('Không sao chép được');}ta.remove();}}
+function modal(title,body,foot,opts={}){const ov=h('div',{class:'ov'});const close=()=>ov.remove();
+  ov.append(h('div',{class:'modal'+(opts.wide?' wide':''),role:'dialog','aria-label':title},h('div',{class:'modal-h'},h('h3',null,title),h('button',{class:'btn ghost sm',onclick:close},'Đóng')),h('div',{class:'modal-b'},body),foot?h('div',{class:'modal-f'},foot):null));
+  ov.addEventListener('mousedown',e=>{if(e.target===ov)close();});document.body.append(ov);return {close};}
+function confirmBox(msg,ok,fn){const m=modal('Xác nhận',h('p',null,msg),[h('button',{class:'btn',onclick:()=>m.close()},'Hủy'),h('button',{class:'btn pri',onclick:()=>{m.close();fn();}},ok)]);}
+
+/* ============ Dữ liệu tính tiền (lưu trong trình duyệt của máy này) ============ */
+const D={services:LS.get('services',null),bills:LS.get('bills',[])};
+if(!D.services){D.services=PRICES.map(p=>({id:uid(),name:p.name,group:p.group||'',unit:p.unit||'',price:+p.price||0,cost:0,public:true,note:p.note||''}));}
+const saveServices=()=>LS.set('services',D.services);const saveBills=()=>LS.set('bills',D.bills);
+const billCalc=b=>{const sub=(b.lines||[]).reduce((s,l)=>s+(+l.price||0)*(+l.qty||0),0);const cost=(b.lines||[]).reduce((s,l)=>s+(+l.cost||0)*(+l.qty||0),0);
+  const disc=Math.min(sub,+b.discount||0);const total=sub-disc;const paid=(b.payments||[]).reduce((s,p)=>s+(+p.amount||0),0);return {sub,cost,disc,total,paid,due:Math.max(0,total-paid),profit:total-cost};};
+
+/* ============ Điều hướng ============ */
+const ROUTES=[['home','Trang chủ'],['kien-thuc','Kiến thức'],['bang-gia','Bảng giá']];
+const unlocked=()=>!LS.get('pin',null)||SS.get('ok')==='1';
+function route(){const r=(location.hash||'#home').slice(1);if(r.startsWith('bai-'))return 'bai';return ['home','kien-thuc','bang-gia','tinh-tien'].includes(r)?r:'home';}
+function render(){const r=route();$('#brandName').textContent=SITE.name||'BS. Hà Hiếu';$('#brandSub').textContent=SITE.sub||'';
+  const nav=$('#nav');nav.replaceChildren(...ROUTES.map(([k,l])=>h('a',{href:'#'+k,class:(r===k||(r==='bai'&&k==='kien-thuc'))?'on':''},l)));if(r==='tinh-tien')nav.append(h('a',{href:'#tinh-tien',class:'on'},'Tính tiền'));
+  const v={home:vHome,'kien-thuc':vArticles,bai:vArticle,'bang-gia':vPrices,'tinh-tien':vBilling}[r];
+  $('#main').replaceChildren(...[].concat(v()));
+  const a=r==='bai'?ARTICLES.find(x=>'bai-'+x.id===location.hash.slice(1)):null;document.title=a?a.title+' · '+(SITE.name||''):(SITE.name||'BS. Hà Hiếu')+' · Thẩm mỹ & Kiến thức';}
+window.addEventListener('hashchange',()=>{render();window.scrollTo(0,0);});
+
+/* ============ Markdown đơn giản ============ */
+const inline=t=>String(t).split(/(\*\*[^*]+\*\*)/g).map(p=>p.startsWith('**')&&p.endsWith('**')?h('strong',null,p.slice(2,-2)):p);
+function md(text){const out=[];let ul=null,para=[];const flush=()=>{if(para.length){out.push(h('p',null,inline(para.join(' '))));para=[];}};
+  for(const raw of String(text||'').split('\n')){const l=raw.trim();if(!l){flush();ul=null;continue;}
+    if(/^#{1,3}\s/.test(l)){flush();ul=null;out.push(h(l.startsWith('###')?'h3':'h2',null,l.replace(/^#+\s*/,'')));continue;}
+    if(/^[-*•]\s/.test(l)){flush();if(!ul){ul=h('ul');out.push(ul);}ul.append(h('li',null,inline(l.replace(/^[-*•]\s*/,''))));continue;}
+    ul=null;para.push(l);}flush();return out;}
+
+/* ============ Trang công khai ============ */
+const sortedArticles=()=>[...ARTICLES].sort((a,b)=>(b.date||'').localeCompare(a.date||''));
+const articleCard=a=>h('a',{class:'card article-card',href:'#bai-'+a.id},h('span',{class:'tag'},a.topic||'Kiến thức'),h('h3',null,a.title),h('p',{class:'small muted'},a.summary||''));
+function vHome(){const info=[['Bác sĩ',SITE.doctor],['Chuyên môn',SITE.spec],['Điện thoại',SITE.phone],['Zalo',SITE.zalo],['Địa chỉ',SITE.address],['Giờ khám',SITE.hours]].filter(x=>x[1]);
+  const out=[h('section',{class:'hero'},h('div',null,h('h1',null,SITE.headline||'Thẩm mỹ an toàn'),h('p',{class:'lead'},SITE.intro||''),
+      h('div',{class:'row',style:'margin-top:16px'},h('a',{class:'btn pri',href:'#kien-thuc'},'Đọc kiến thức'),h('a',{class:'btn',href:'#bang-gia'},'Xem bảng giá'),SITE.phone?h('a',{class:'btn',href:'tel:'+SITE.phone.replace(/\s/g,'')},'Gọi '+SITE.phone):null)),
+    h('div',{class:'hero-side'},info.map(([k,v])=>h('div',null,h('b',null,k),h('span',null,v))))),
+    h('div',{class:'page-head'},h('h2',null,'Bài viết mới'),h('a',{href:'#kien-thuc'},'Xem tất cả')),
+    ARTICLES.length?h('div',{class:'grid g3'},sortedArticles().slice(0,3).map(articleCard)):h('div',{class:'empty'},'Chưa có bài viết.')];
+  if(PRICES.length)out.push(h('div',{class:'page-head'},h('h2',null,'Dịch vụ'),h('a',{href:'#bang-gia'},'Bảng giá đầy đủ')),
+    h('div',{class:'grid g4'},PRICES.slice(0,8).map(p=>h('div',{class:'tile'},h('span',{class:'lab'},p.group||'Dịch vụ'),h('b',null,p.name),h('span',{class:'num',style:'color:var(--accent);font-weight:600'},p.price?fmt(p.price):'Liên hệ')))));
+  return out;}
+function vArticles(){const topics=[...new Set(ARTICLES.map(a=>a.topic).filter(Boolean))];let topic='',q='';
+  const grid=h('div',{class:'grid g3'});const draw=()=>{const qq=norm(q);const l=sortedArticles().filter(a=>(!topic||a.topic===topic)&&(!qq||norm(a.title+' '+a.summary+' '+a.body).includes(qq)));
+    grid.replaceChildren(...(l.length?l.map(articleCard):[h('div',{class:'empty'},'Không có bài phù hợp.')]));};
+  const chips=h('div',{class:'chips'});const drawChips=()=>chips.replaceChildren(...[['','Tất cả'],...topics.map(t=>[t,t])].map(([k,l])=>h('button',{class:'chip'+(topic===k?' on':''),onclick:()=>{topic=k;drawChips();draw();}},l)));
+  drawChips();draw();
+  return [h('div',{class:'page-head'},h('div',null,h('h1',null,'Kiến thức thẩm mỹ'),h('p',null,'Giải thích dễ hiểu về các thủ thuật, cách chăm sóc trước và sau điều trị.')),
+    h('input',{type:'search',id:'q',placeholder:'Tìm bài viết…',style:'max-width:280px',oninput:e=>{q=e.target.value;draw();}})),chips,grid];}
+function vArticle(){const a=ARTICLES.find(x=>'bai-'+x.id===location.hash.slice(1));if(!a)return vArticles();
+  const others=sortedArticles().filter(x=>x.id!==a.id&&x.topic===a.topic).concat(sortedArticles().filter(x=>x.id!==a.id&&x.topic!==a.topic)).slice(0,3);
+  return [h('a',{class:'btn ghost',href:'#kien-thuc',style:'align-self:flex-start'},'← Tất cả bài viết'),
+    h('article',{class:'card',style:'padding:24px'},h('span',{class:'pill info',style:'align-self:flex-start'},a.topic||'Kiến thức'),h('h1',null,a.title),
+      h('p',{class:'small muted'},(SITE.doctor||'')+(a.date?' · '+fmtDate(a.date):'')),h('div',{class:'prose'},md(a.body)),
+      h('div',{class:'note-box'},'Bài viết mang tính tham khảo. Mỗi người có cơ địa khác nhau, hãy đến khám để bác sĩ tư vấn phù hợp.'+(SITE.phone?' Liên hệ: '+SITE.phone:''))),
+    others.length?h('h2',null,'Bài viết khác'):null,others.length?h('div',{class:'grid g3'},others.map(articleCard)):null];}
+function vPrices(){const g={};PRICES.forEach(p=>{(g[p.group||'Dịch vụ khác']=g[p.group||'Dịch vụ khác']||[]).push(p);});
+  return [h('div',{class:'page-head'},h('div',null,h('h1',null,'Bảng giá dịch vụ'),h('p',null,'Giá tham khảo. Giá chính xác tùy tình trạng thực tế sau khi bác sĩ thăm khám.'))),
+    PRICES.length?h('div',{class:'grid g2'},Object.entries(g).map(([k,l])=>h('div',{class:'card'},h('h3',null,k),h('div',null,l.map(p=>h('div',{class:'price-row'},h('div',null,h('div',null,p.name),p.note?h('div',{class:'small muted'},p.note):null),h('b',null,p.price?fmt(p.price)+(p.unit?' / '+p.unit:''):'Liên hệ'))))))):
+    h('div',{class:'empty'},'Bảng giá đang được cập nhật. Vui lòng liên hệ để được tư vấn.')];}
+
+/* ============ Khu bác sĩ: Tính tiền ============ */
+let tab='bills',billMonth=today().slice(0,7);
+function vBilling(){if(!unlocked())return vLock();
+  const tabs=h('div',{class:'chips'},[['bills','Phiếu thu'],['services','Dịch vụ & giá vốn'],['data','Sao lưu & cài đặt']].map(([k,l])=>h('button',{class:'chip'+(tab===k?' on':''),onclick:()=>{tab=k;render();}},l)));
+  return [h('div',{class:'page-head'},h('div',null,h('h1',null,'Tính tiền'),h('p',null,'Dữ liệu chỉ lưu trên trình duyệt của máy này. Nhớ sao lưu định kỳ.')),
+    tab==='bills'?h('button',{class:'btn pri',onclick:()=>editBill()},'+ Tạo phiếu thu'):tab==='services'?h('button',{class:'btn pri',onclick:()=>editService()},'+ Thêm dịch vụ'):null),tabs,
+    ...(tab==='bills'?billsView():tab==='services'?servicesView():dataView())];}
+function vLock(){const p=h('input',{type:'password',id:'pin',inputmode:'numeric',placeholder:'Nhập mã PIN',autocomplete:'current-password'});
+  const go=()=>{if(hashPin(p.value)===LS.get('pin','')){SS.set('ok','1');render();}else{toast('Sai mã PIN');p.value='';p.focus();}};
+  p.addEventListener('keydown',e=>{if(e.key==='Enter')go();});setTimeout(()=>p.focus(),30);
+  return h('div',{class:'card lock'},h('h2',null,'Khu bác sĩ'),h('p',{class:'muted small'},'Nhập mã PIN để mở trang tính tiền trên máy này.'),p,h('button',{class:'btn pri',onclick:go},'Mở khóa'));}
+function billsView(){const mi=h('input',{type:'month',id:'bm',value:billMonth,style:'max-width:180px',onchange:e=>{billMonth=e.target.value||today().slice(0,7);render();}});
+  const list=D.bills.filter(b=>monthOf(b.date)===billMonth).sort((a,b)=>(b.date||'').localeCompare(a.date||'')||(b.createdAt||0)-(a.createdAt||0));
+  const t=list.reduce((s,b)=>{const c=billCalc(b);s.total+=c.total;s.paid+=c.paid;s.profit+=c.profit;return s;},{total:0,paid:0,profit:0});
+  const debt=D.bills.reduce((s,b)=>s+billCalc(b).due,0);
+  return [h('div',{class:'row'},h('span',{class:'small muted'},'Tháng'),mi),
+    h('div',{class:'grid g4'},h('div',{class:'tile'},h('span',{class:'lab'},'Doanh thu phiếu'),h('span',{class:'val'},fmt(t.total))),h('div',{class:'tile good'},h('span',{class:'lab'},'Đã thu'),h('span',{class:'val'},fmt(t.paid))),
+      h('div',{class:'tile'},h('span',{class:'lab'},'Lãi gộp'+(t.total?' · '+Math.round(t.profit/t.total*100)+'%':'')),h('span',{class:'val'},fmt(t.profit))),h('div',{class:'tile '+(debt?'bad':'')},h('span',{class:'lab'},'Khách còn nợ (mọi tháng)'),h('span',{class:'val'},fmt(debt)))),
+    list.length?h('div',{class:'tbl-wrap'},h('table',null,h('thead',null,h('tr',null,h('th',null,'Số phiếu'),h('th',null,'Ngày'),h('th',null,'Khách'),h('th',null,'Dịch vụ'),h('th',{class:'r'},'Phải thu'),h('th',{class:'r'},'Lãi'),h('th',null,'Trạng thái'))),
+      h('tbody',null,list.map(b=>{const c=billCalc(b);return h('tr',{class:'click',onclick:()=>billDetail(b)},h('td',{class:'num small'},b.no||''),h('td',{class:'num'},fmtDate(b.date)),h('td',null,b.name||'Khách lẻ',b.phone?h('div',{class:'small muted'},b.phone):null),
+        h('td',null,(b.lines||[]).map(l=>l.name+(l.qty>1?' ×'+l.qty:'')).join(', ')),h('td',{class:'r'},fmt(c.total)),h('td',{class:'r'},fmt(c.profit)),h('td',null,c.due?h('span',{class:'pill bad'},'Nợ '+fmtShort(c.due)):h('span',{class:'pill good'},'Đã thu đủ')));})))):
+      h('div',{class:'empty'},'Chưa có phiếu thu trong tháng này.')];}
+function servicesView(){const list=[...D.services].sort((a,b)=>(a.group||'').localeCompare(b.group||'')||(a.name||'').localeCompare(b.name||''));
+  return [h('div',{class:'row'},h('button',{class:'btn',onclick:exportPrices},'Xuất bảng giá công khai'),h('span',{class:'small muted'},'Tạo đoạn mã dán vào data.js để cập nhật trang Bảng giá. Giá vốn không bị đưa ra ngoài.')),
+    list.length?h('div',{class:'tbl-wrap'},h('table',null,h('thead',null,h('tr',null,h('th',null,'Dịch vụ'),h('th',null,'Nhóm'),h('th',{class:'r'},'Giá vốn'),h('th',{class:'r'},'Giá bán'),h('th',{class:'r'},'Lãi / lần'),h('th',{class:'r'},'Biên lãi'),h('th',null,'Công khai'))),
+      h('tbody',null,list.map(s=>{const pr=(+s.price||0)-(+s.cost||0);const mg=s.price?pr/s.price:0;return h('tr',{class:'click',onclick:()=>editService(s)},h('td',null,h('b',null,s.name),s.unit?h('span',{class:'small muted'},' / '+s.unit):null),h('td',null,s.group||''),
+        h('td',{class:'r'},fmt(s.cost)),h('td',{class:'r'},fmt(s.price)),h('td',{class:'r'},fmt(pr)),h('td',{class:'r'},h('span',{class:'pill '+(mg>=.5?'good':mg>=.25?'info':'warn')},Math.round(mg*100)+'%')),h('td',null,s.public?h('span',{class:'pill info'},'Hiện'):h('span',{class:'pill mute'},'Ẩn')));})))):
+    h('div',{class:'empty'},'Chưa có dịch vụ. Thêm dịch vụ với giá vốn (vật tư + chi phí), trang sẽ tự tính giá bán theo % lãi bạn muốn.')];}
+function exportPrices(){const items=D.services.filter(s=>s.public).sort((a,b)=>(a.group||'').localeCompare(b.group||'')||(a.name||'').localeCompare(b.name||''));
+  const code='window.PRICES = [\n'+items.map(s=>'  '+JSON.stringify({group:s.group||'',name:s.name,price:+s.price||0,unit:s.unit||'',note:s.note||''})).join(',\n')+'\n];';
+  const ta=h('textarea',{style:'min-height:220px;font-family:ui-monospace,monospace;font-size:12px',readonly:true},code);
+  const m=modal('Bảng giá công khai',h('div',{class:'stack'},h('p',{class:'small'},'Mở tệp data.js trên GitHub, xóa từ dòng "window.PRICES = [" đến dấu "];" ngay sau đó, rồi dán đoạn này vào. Bấm Commit là xong.'),ta),
+    [h('button',{class:'btn',onclick:()=>m.close()},'Đóng'),h('button',{class:'btn pri',onclick:()=>copyText(code)},'Sao chép')],{wide:true});}
+function editService(s){const isNew=!s;s=s||{public:true};
+  const f={name:h('input',{type:'text',id:'s-name',value:s.name||'',placeholder:'VD: Laser toning toàn mặt'}),group:h('input',{type:'text',id:'s-group',value:s.group||'',placeholder:'VD: Laser, Filler, Phẫu thuật',list:'grp'}),
+    unit:h('input',{type:'text',id:'s-unit',value:s.unit||'',placeholder:'lần, cc, buổi, gói'}),cost:h('input',{type:'text',id:'s-cost',inputmode:'decimal',value:s.cost||'',placeholder:'VD: 350k'}),
+    pct:h('input',{type:'text',id:'s-pct',inputmode:'decimal',value:s.cost&&s.price?Math.round((s.price-s.cost)/s.cost*100):'',placeholder:'VD: 150'}),price:h('input',{type:'text',id:'s-price',inputmode:'decimal',value:s.price||'',placeholder:'VD: 1tr2'}),
+    note:h('input',{type:'text',id:'s-note',value:s.note||''}),pub:h('input',{type:'checkbox',id:'s-pub',checked:s.public})};
+  const out=h('div',{class:'totals'});
+  const calc=from=>{const c=parseMoney(f.cost.value);if(from==='pct'&&c)f.price.value=Math.round(c*(1+parseMoney(f.pct.value)/100)/1000)*1000;const p=parseMoney(f.price.value);if(from!=='pct'&&c&&p)f.pct.value=Math.round((p-c)/c*100);
+    out.replaceChildren(h('span',null,'Giá vốn'),h('span',{class:'r'},fmt(c)),h('span',null,'Giá bán'),h('span',{class:'r'},fmt(p)),h('span',{class:'big'},'Lãi mỗi lần'),h('span',{class:'r big',style:'color:'+(p-c>=0?'var(--good)':'var(--bad)')},fmt(p-c)),h('span',null,'Biên lãi trên giá bán'),h('span',{class:'r'},p?Math.round((p-c)/p*100)+'%':'—'));};
+  f.cost.addEventListener('input',()=>calc('cost'));f.pct.addEventListener('input',()=>calc('pct'));f.price.addEventListener('input',()=>calc('price'));calc();
+  const m=modal(isNew?'Thêm dịch vụ':'Sửa dịch vụ',h('div',{class:'stack'},h('datalist',{id:'grp'},[...new Set(D.services.map(x=>x.group).filter(Boolean))].map(g=>h('option',{value:g}))),
+    h('div',{class:'fgrid'},h('label',{class:'f full'},'Tên dịch vụ *',f.name),h('label',{class:'f'},'Nhóm',f.group),h('label',{class:'f'},'Đơn vị',f.unit),h('label',{class:'f'},'Giá vốn (vật tư + chi phí)',f.cost),h('label',{class:'f'},'% lãi trên giá vốn',f.pct),h('label',{class:'f'},'Giá bán',f.price),
+      h('label',{class:'f full'},'Ghi chú hiện trên bảng giá',f.note),h('label',{class:'f inline full'},f.pub,'Đưa vào bảng giá công khai')),out,h('p',{class:'small muted'},'Gõ tắt được: 350k, 1tr2, 2.5tr.')),
+    [!isNew?h('button',{class:'btn danger',onclick:()=>confirmBox('Xóa dịch vụ '+s.name+'?','Xóa',()=>{D.services=D.services.filter(x=>x.id!==s.id);saveServices();m.close();render();})},'Xóa'):null,h('span',{class:'spacer'}),h('button',{class:'btn',onclick:()=>m.close()},'Hủy'),
+     h('button',{class:'btn pri',onclick:()=>{if(!f.name.value.trim()){toast('Cần tên dịch vụ');return;}const d={id:s.id||uid(),name:f.name.value.trim(),group:f.group.value.trim(),unit:f.unit.value.trim(),cost:parseMoney(f.cost.value),price:parseMoney(f.price.value),note:f.note.value.trim(),public:f.pub.checked};
+       D.services=D.services.filter(x=>x.id!==d.id).concat([d]);saveServices();m.close();toast('Đã lưu dịch vụ');render();}},'Lưu')]);setTimeout(()=>f.name.focus(),30);}
+function nextBillNo(date){const p='HD'+date.replace(/-/g,'').slice(2);const n=D.bills.filter(b=>(b.no||'').startsWith(p)).length+1;return p+'-'+String(n).padStart(2,'0');}
+function editBill(b){const isNew=!b;b=b?JSON.parse(JSON.stringify(b)):{date:today(),lines:[],payments:[]};const lines=b.lines;
+  const name=h('input',{type:'text',id:'b-name',value:b.name||'',placeholder:'Tên khách',list:'cust'});const phone=h('input',{type:'text',id:'b-phone',value:b.phone||'',inputmode:'tel'});
+  const custs={};D.bills.forEach(x=>{if(x.name)custs[x.name]=x.phone||'';});name.addEventListener('change',()=>{if(custs[name.value]&&!phone.value)phone.value=custs[name.value];});
+  const date=h('input',{type:'date',id:'b-date',value:b.date});
+  const pick=h('select',{id:'b-pick'},h('option',{value:''},D.services.length?'Chọn dịch vụ để thêm…':'Chưa có dịch vụ, thêm ở tab Dịch vụ'),D.services.map(s=>h('option',{value:s.id},s.name+' · '+fmt(s.price))));
+  pick.addEventListener('change',()=>{const s=D.services.find(x=>x.id===pick.value);if(s){lines.push({name:s.name,qty:1,price:+s.price||0,cost:+s.cost||0});pick.value='';draw();}});
+  const disc=h('input',{type:'text',id:'b-disc',value:b.discountText||'',placeholder:'VD: 10% hoặc 200k'});
+  const paid=h('input',{type:'text',id:'b-paid',inputmode:'decimal',placeholder:isNew?'Gõ "đủ" nếu trả hết':'Thu thêm ở chi tiết phiếu'});if(!isNew)paid.disabled=true;
+  let method='Tiền mặt';const mch=h('div',{class:'chips'});const drawM=()=>mch.replaceChildren(...['Tiền mặt','Chuyển khoản','Quẹt thẻ'].map(x=>h('button',{type:'button',class:'chip'+(method===x?' on':''),onclick:()=>{method=x;drawM();}},x)));drawM();
+  const note=h('input',{type:'text',id:'b-note',value:b.note||'',placeholder:'VD: gói 10 buổi, trả 3 lần'});
+  const tb=h('tbody'),tot=h('div',{class:'totals'});
+  const recalc=()=>{const sub=lines.reduce((s,l)=>s+l.price*l.qty,0),cost=lines.reduce((s,l)=>s+l.cost*l.qty,0);const dt=disc.value.trim();const d=Math.min(sub,/%$/.test(dt)?Math.round(sub*(parseFloat(dt)||0)/100):parseMoney(dt));const total=sub-d;
+    const already=(b.payments||[]).reduce((s,p)=>s+(+p.amount||0),0);const now=isNew?(norm(paid.value.trim())==='du'?total:parseMoney(paid.value)):0;const due=Math.max(0,total-already-now);
+    tot.replaceChildren(h('span',null,'Tạm tính'),h('span',{class:'r'},fmt(sub)),h('span',null,'Giảm giá'),h('span',{class:'r'},d?'−'+fmt(d):'0 đ'),h('span',{class:'big'},'Khách phải trả'),h('span',{class:'r big'},fmt(total)),
+      h('span',null,'Đã trả'),h('span',{class:'r'},fmt(already+now)),h('span',null,'Còn nợ'),h('span',{class:'r',style:due?'color:var(--bad);font-weight:600':''},fmt(due)),
+      h('span',{class:'muted'},'Lãi gộp (khách không thấy)'),h('span',{class:'r muted'},fmt(total-cost)+(total?' · '+Math.round((total-cost)/total*100)+'%':'')));return {d,total,now};};
+  const draw=()=>{tb.replaceChildren(...(lines.length?lines.map((l,i)=>h('tr',null,h('td',null,h('input',{type:'text',value:l.name,'aria-label':'Dịch vụ',oninput:e=>{l.name=e.target.value;}})),
+      h('td',{style:'width:70px'},h('input',{type:'number',min:'1',value:l.qty,'aria-label':'Số lượng',oninput:e=>{l.qty=Math.max(0,+e.target.value||0);recalc();}})),
+      h('td',{style:'width:130px'},h('input',{type:'text',inputmode:'decimal',value:l.price,'aria-label':'Đơn giá',onchange:e=>{l.price=parseMoney(e.target.value);e.target.value=l.price;recalc();}})),
+      h('td',{class:'r'},fmt(l.price*l.qty)),h('td',null,h('button',{class:'btn sm ghost',type:'button','aria-label':'Bỏ dòng',onclick:()=>{lines.splice(i,1);draw();}},'×')))):[h('tr',null,h('td',{colspan:5,class:'small muted'},'Chọn dịch vụ ở trên để thêm vào phiếu.'))]));recalc();};
+  disc.addEventListener('input',recalc);paid.addEventListener('input',recalc);draw();
+  const m=modal(isNew?'Phiếu thu mới':'Sửa phiếu '+(b.no||''),h('div',{class:'stack'},h('datalist',{id:'cust'},Object.keys(custs).map(n=>h('option',{value:n}))),
+    h('div',{class:'fgrid'},h('label',{class:'f'},'Khách hàng',name),h('label',{class:'f'},'Số điện thoại',phone),h('label',{class:'f'},'Ngày',date)),pick,
+    h('div',{class:'tbl-wrap'},h('table',null,h('thead',null,h('tr',null,h('th',null,'Dịch vụ'),h('th',null,'SL'),h('th',null,'Đơn giá'),h('th',{class:'r'},'Thành tiền'),h('th',null,''))),tb)),
+    h('div',{class:'fgrid'},h('label',{class:'f'},'Giảm giá',disc),h('label',{class:'f'},'Khách trả lúc này',paid),h('div',{class:'f'},h('span',null,'Hình thức'),mch),h('label',{class:'f full'},'Ghi chú',note)),tot),
+    [h('button',{class:'btn',onclick:()=>m.close()},'Hủy'),h('button',{class:'btn pri',onclick:()=>{if(!lines.filter(l=>l.qty>0).length){toast('Phiếu cần ít nhất 1 dịch vụ');return;}const r=recalc();
+      const pays=[...(b.payments||[])];if(r.now>0)pays.push({date:date.value||today(),amount:r.now,method});
+      const d={...b,id:b.id||uid(),no:b.no||nextBillNo(date.value||today()),name:name.value.trim(),phone:phone.value.trim(),date:date.value||today(),lines:lines.filter(l=>l.qty>0),discount:r.d,discountText:disc.value.trim(),payments:pays,note:note.value.trim(),createdAt:b.createdAt||Date.now()};
+      D.bills=D.bills.filter(x=>x.id!==d.id).concat([d]);if(!saveBills())return;m.close();toast('Đã lưu phiếu '+d.no);billMonth=monthOf(d.date);render();if(isNew)billDetail(d);}},'Lưu phiếu')],{wide:true});}
+function billText(b){const c=billCalc(b);return [`PHIẾU THU ${b.no||''} · ${SITE.name||''}`,`Ngày: ${fmtDate(b.date)}`,`Khách hàng: ${b.name||'Khách lẻ'}`,'',...(b.lines||[]).map(l=>`- ${l.name} x${l.qty}: ${fmt(l.price*l.qty)}`),'',
+  `Tạm tính: ${fmt(c.sub)}`,c.disc?`Giảm giá: -${fmt(c.disc)}`:null,`Tổng cộng: ${fmt(c.total)}`,`Đã thanh toán: ${fmt(c.paid)}`,c.due?`Còn lại: ${fmt(c.due)}`:'Đã thanh toán đủ',b.note?`Ghi chú: ${b.note}`:null,SITE.phone?`Liên hệ: ${SITE.phone}`:null].filter(x=>x!=null).join('\n');}
+function printBill(b){const c=billCalc(b);const p=$('#print');p.replaceChildren(h('h2',null,SITE.name||''),h('div',null,[SITE.spec,SITE.address,SITE.phone].filter(Boolean).join(' · ')),h('hr'),
+  h('h2',{style:'text-align:center;margin:8px 0'},'PHIẾU THU'),h('div',null,'Số: '+(b.no||'')+' · Ngày: '+fmtDate(b.date)),h('div',null,'Khách hàng: '+(b.name||'Khách lẻ')+(b.phone?' · '+b.phone:'')),
+  h('table',null,h('thead',null,h('tr',null,h('th',null,'Dịch vụ'),h('th',{class:'r'},'SL'),h('th',{class:'r'},'Đơn giá'),h('th',{class:'r'},'Thành tiền'))),h('tbody',null,(b.lines||[]).map(l=>h('tr',null,h('td',null,l.name),h('td',{class:'r'},l.qty),h('td',{class:'r'},fmt(l.price)),h('td',{class:'r'},fmt(l.price*l.qty)))))),
+  h('div',{class:'r'},'Tạm tính: '+fmt(c.sub)),c.disc?h('div',{class:'r'},'Giảm giá: −'+fmt(c.disc)):null,h('div',{class:'r',style:'font-weight:700;font-size:15px'},'Tổng cộng: '+fmt(c.total)),
+  h('div',{class:'r'},'Đã thanh toán: '+fmt(c.paid)),c.due?h('div',{class:'r'},'Còn lại: '+fmt(c.due)):null,b.note?h('p',{style:'margin-top:8px'},'Ghi chú: '+b.note):null,
+  h('div',{style:'display:flex;justify-content:space-between;margin-top:30px;text-align:center'},h('div',null,'Khách hàng',h('br'),h('i',null,'(ký, ghi rõ họ tên)')),h('div',null,'Người thu tiền',h('br'),h('i',null,'(ký, ghi rõ họ tên)'))));
+  window.print();}
+function billDetail(b){const c=billCalc(b);const amt=h('input',{type:'text',id:'pay',inputmode:'decimal',value:c.due||'',placeholder:'Số tiền'});const pd=h('input',{type:'date',id:'pay-d',value:today()});
+  const m=modal('Phiếu '+(b.no||''),h('div',{class:'stack'},h('div',{class:'row'},h('b',null,b.name||'Khách lẻ'),b.phone?h('span',{class:'muted'},b.phone):null,h('span',{class:'muted'},fmtDate(b.date)),c.due?h('span',{class:'pill bad'},'Còn nợ '+fmt(c.due)):h('span',{class:'pill good'},'Đã thu đủ')),
+    h('div',{class:'tbl-wrap'},h('table',null,h('thead',null,h('tr',null,h('th',null,'Dịch vụ'),h('th',{class:'r'},'SL'),h('th',{class:'r'},'Đơn giá'),h('th',{class:'r'},'Thành tiền'))),h('tbody',null,b.lines.map(l=>h('tr',null,h('td',null,l.name),h('td',{class:'r'},l.qty),h('td',{class:'r'},fmt(l.price)),h('td',{class:'r'},fmt(l.price*l.qty))))))),
+    h('div',{class:'totals'},h('span',null,'Tạm tính'),h('span',{class:'r'},fmt(c.sub)),h('span',null,'Giảm giá'),h('span',{class:'r'},c.disc?'−'+fmt(c.disc):'0 đ'),h('span',{class:'big'},'Tổng'),h('span',{class:'r big'},fmt(c.total)),h('span',{class:'muted'},'Lãi gộp'),h('span',{class:'r muted'},fmt(c.profit))),
+    h('h4',null,'Lịch sử thanh toán'),(b.payments||[]).length?h('div',{class:'list'},b.payments.map(p=>h('div',{class:'li'},h('div',{class:'main'},h('div',{class:'t num'},fmt(p.amount)),h('div',{class:'s'},fmtDate(p.date)+' · '+(p.method||'')))))):h('p',{class:'small muted'},'Chưa thu đồng nào.'),
+    c.due?h('div',{class:'row'},h('div',{style:'max-width:170px'},amt),h('div',{style:'max-width:170px'},pd),h('button',{class:'btn pri',onclick:()=>{const a=parseMoney(amt.value);if(!a){toast('Nhập số tiền');return;}
+      const d={...b,payments:[...(b.payments||[]),{date:pd.value||today(),amount:a,method:'Tiền mặt'}]};D.bills=D.bills.map(x=>x.id===b.id?d:x);saveBills();m.close();toast('Đã thu thêm '+fmt(a));render();}},'Thu thêm')):null,b.note?h('p',{class:'small muted'},'Ghi chú: '+b.note):null),
+    [h('button',{class:'btn danger',onclick:()=>confirmBox('Xóa phiếu '+(b.no||'')+'?','Xóa',()=>{D.bills=D.bills.filter(x=>x.id!==b.id);saveBills();m.close();render();})},'Xóa'),h('span',{class:'spacer'}),
+     h('button',{class:'btn',onclick:()=>copyText(billText(b))},'Sao chép gửi Zalo'),h('button',{class:'btn',onclick:()=>printBill(b)},'In phiếu'),h('button',{class:'btn',onclick:()=>{m.close();editBill(b);}},'Sửa')]);}
+function dataView(){const hasPin=!!LS.get('pin',null);const last=LS.get('lastBackup',null);
+  const file=h('input',{type:'file',accept:'.json,application/json',class:'hide',id:'imp'});
+  file.addEventListener('change',async()=>{const f=file.files[0];file.value='';if(!f)return;try{const j=JSON.parse(await f.text());if(!Array.isArray(j.bills)||!Array.isArray(j.services))throw 0;
+    confirmBox('Thay dữ liệu hiện tại bằng bản sao lưu ('+j.bills.length+' phiếu, '+j.services.length+' dịch vụ)?','Khôi phục',()=>{D.bills=j.bills;D.services=j.services;saveBills();saveServices();toast('Đã khôi phục');render();});}catch(e){toast('Tệp sao lưu không hợp lệ');}});
+  const p1=h('input',{type:'password',id:'p1',inputmode:'numeric',placeholder:'Mã PIN mới (4–8 số)'});
+  return [h('div',{class:'grid g2'},
+    h('div',{class:'card'},h('h3',null,'Sao lưu dữ liệu'),h('p',{class:'small muted'},'Dữ liệu nằm trong trình duyệt của máy này. Nếu xóa lịch sử trình duyệt hoặc đổi máy, dữ liệu sẽ mất. Hãy tải bản sao lưu mỗi tuần và cất vào Google Drive.'),
+      h('p',{class:'small'},last?'Lần sao lưu gần nhất: '+fmtDate(last):h('span',{class:'pill warn'},'Chưa sao lưu lần nào')),
+      h('div',{class:'row'},h('button',{class:'btn pri',onclick:()=>{const blob=new Blob([JSON.stringify({app:'bshh',at:new Date().toISOString(),services:D.services,bills:D.bills},null,1)],{type:'application/json'});
+        const a=h('a',{href:URL.createObjectURL(blob),download:'sao-luu-tinh-tien-'+today()+'.json'});document.body.append(a);a.click();a.remove();LS.set('lastBackup',today());toast('Đã tải bản sao lưu');setTimeout(render,300);}},'Tải bản sao lưu'),
+        h('button',{class:'btn',onclick:()=>file.click()},'Khôi phục từ tệp'),file),
+      h('p',{class:'small muted'},'Muốn dùng trên máy khác: tải sao lưu ở máy này, mở trang ở máy kia rồi chọn "Khôi phục từ tệp".')),
+    h('div',{class:'card'},h('h3',null,'Mã PIN khu bác sĩ'),h('p',{class:'small muted'},'Khi có người khác dùng chung máy, mã PIN giúp họ không mở được trang tính tiền. Khách xem web trên điện thoại của họ không thấy dữ liệu của anh.'),
+      h('div',{class:'row'},h('div',{style:'max-width:200px'},p1),h('button',{class:'btn',onclick:()=>{if(!/^\d{4,8}$/.test(p1.value)){toast('PIN gồm 4–8 chữ số');return;}LS.set('pin',hashPin(p1.value));SS.set('ok','1');toast('Đã đặt mã PIN');render();}},hasPin?'Đổi PIN':'Đặt PIN')),
+      hasPin?h('div',{class:'row'},h('button',{class:'btn sm',onclick:()=>{SS.set('ok','0');render();}},'Khóa ngay'),h('button',{class:'btn sm danger',onclick:()=>confirmBox('Bỏ mã PIN?','Bỏ PIN',()=>{try{localStorage.removeItem('bshh:pin');}catch(e){}toast('Đã bỏ PIN');render();})},'Bỏ PIN')):null))];}
+
+render();
+</script>
+</body>
+</html>
