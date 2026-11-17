@@ -135,7 +135,14 @@ td input{padding:5px 7px}
 .totals{display:grid;grid-template-columns:1fr auto;gap:4px 16px;font-size:14px;background:var(--surface-2);padding:12px 14px;border-radius:8px}
 .totals .r{text-align:right;font-variant-numeric:tabular-nums}
 .totals .big{font-weight:700;font-size:16px}
-.lock{max-width:380px;margin:40px auto}
+.lock{max-width:440px;margin:40px auto}
+.wall{position:relative;text-align:center;align-items:center;padding:36px 24px 44px}
+.wall .wall-ic{width:52px;height:52px;border-radius:50%;background:var(--bad-soft);color:var(--bad);display:grid;place-items:center}
+.wall .wall-ic svg{width:26px;height:26px}
+.wall h2{font-size:19px}
+.wall .pinbox{width:100%;max-width:280px;margin-top:6px;text-align:left}
+.secret{position:absolute;right:12px;bottom:10px;border:none;background:transparent;color:var(--muted);opacity:.28;font-size:13px;padding:6px;cursor:default;line-height:1;user-select:none;-webkit-tap-highlight-color:transparent}
+.secret:focus-visible{opacity:1}
 
 .ov{position:fixed;inset:0;background:rgba(8,20,24,.5);z-index:50;display:flex;align-items:flex-start;justify-content:center;padding:28px 12px;overflow-y:auto}
 .modal{background:var(--surface);border-radius:14px;width:100%;max-width:760px;display:flex;flex-direction:column;border:1px solid var(--line)}
@@ -211,10 +218,10 @@ const billCalc=b=>{const sub=(b.lines||[]).reduce((s,l)=>s+(+l.price||0)*(+l.qty
 
 /* ============ Điều hướng ============ */
 const ROUTES=[['home','Trang chủ'],['kien-thuc','Kiến thức'],['bang-gia','Bảng giá']];
-const unlocked=()=>!LS.get('pin',null)||SS.get('ok')==='1';
+const unlocked=()=>!!LS.get('pin',null)&&SS.get('ok')==='1';
 function route(){const r=(location.hash||'#home').slice(1);if(r.startsWith('bai-'))return 'bai';return ['home','kien-thuc','bang-gia','tinh-tien'].includes(r)?r:'home';}
 function render(){const r=route();$('#brandName').textContent=SITE.name||'BS. Hà Hiếu';$('#brandSub').textContent=SITE.sub||'';
-  const nav=$('#nav');nav.replaceChildren(...ROUTES.map(([k,l])=>h('a',{href:'#'+k,class:(r===k||(r==='bai'&&k==='kien-thuc'))?'on':''},l)));if(r==='tinh-tien')nav.append(h('a',{href:'#tinh-tien',class:'on'},'Tính tiền'));
+  const nav=$('#nav');nav.replaceChildren(...ROUTES.map(([k,l])=>h('a',{href:'#'+k,class:(r===k||(r==='bai'&&k==='kien-thuc'))?'on':''},l)));if(r==='tinh-tien'&&unlocked())nav.append(h('a',{href:'#tinh-tien',class:'on'},'Tính tiền'));
   const v={home:vHome,'kien-thuc':vArticles,bai:vArticle,'bang-gia':vPrices,'tinh-tien':vBilling}[r];
   $('#main').replaceChildren(...[].concat(v()));
   const a=r==='bai'?ARTICLES.find(x=>'bai-'+x.id===location.hash.slice(1)):null;document.title=a?a.title+' · '+(SITE.name||''):(SITE.name||'BS. Hà Hiếu')+' · Thẩm mỹ & Kiến thức';}
@@ -265,12 +272,23 @@ let tab='bills',billMonth=today().slice(0,7);
 function vBilling(){if(!unlocked())return vLock();
   const tabs=h('div',{class:'chips'},[['bills','Phiếu thu'],['services','Dịch vụ & giá vốn'],['data','Sao lưu & cài đặt']].map(([k,l])=>h('button',{class:'chip'+(tab===k?' on':''),onclick:()=>{tab=k;render();}},l)));
   return [h('div',{class:'page-head'},h('div',null,h('h1',null,'Tính tiền'),h('p',null,'Dữ liệu chỉ lưu trên trình duyệt của máy này. Nhớ sao lưu định kỳ.')),
-    tab==='bills'?h('button',{class:'btn pri',onclick:()=>editBill()},'+ Tạo phiếu thu'):tab==='services'?h('button',{class:'btn pri',onclick:()=>editService()},'+ Thêm dịch vụ'):null),tabs,
+    h('div',{class:'row'},h('button',{class:'btn',onclick:()=>{SS.set('ok','0');location.hash='#home';}},'Khóa & thoát'),tab==='bills'?h('button',{class:'btn pri',onclick:()=>editBill()},'+ Tạo phiếu thu'):tab==='services'?h('button',{class:'btn pri',onclick:()=>editService()},'+ Thêm dịch vụ'):null)),tabs,
     ...(tab==='bills'?billsView():tab==='services'?servicesView():dataView())];}
-function vLock(){const p=h('input',{type:'password',id:'pin',inputmode:'numeric',placeholder:'Nhập mã PIN',autocomplete:'current-password'});
-  const go=()=>{if(hashPin(p.value)===LS.get('pin','')){SS.set('ok','1');render();}else{toast('Sai mã PIN');p.value='';p.focus();}};
-  p.addEventListener('keydown',e=>{if(e.key==='Enter')go();});setTimeout(()=>p.focus(),30);
-  return h('div',{class:'card lock'},h('h2',null,'Khu bác sĩ'),h('p',{class:'muted small'},'Nhập mã PIN để mở trang tính tiền trên máy này.'),p,h('button',{class:'btn pri',onclick:go},'Mở khóa'));}
+function vLock(){const hasPin=!!LS.get('pin',null);const box=h('div',{class:'pinbox stack hide'});
+  const fail=()=>LS.get('fail',{n:0,until:0});
+  const build=()=>{const f=fail();const wait=f.until-Date.now();
+    if(wait>0){box.replaceChildren(h('p',{class:'small',style:'color:var(--bad)'},'Nhập sai quá nhiều lần. Thử lại sau '+Math.ceil(wait/60000)+' phút.'));return;}
+    if(hasPin){const p=h('input',{type:'password',id:'pin',inputmode:'numeric',placeholder:'Mã PIN',autocomplete:'off'});
+      const go=()=>{if(hashPin(p.value)===LS.get('pin','')){LS.set('fail',{n:0,until:0});SS.set('ok','1');render();}
+        else{const x=fail();x.n++;if(x.n>=5){x.until=Date.now()+5*60000;x.n=0;}LS.set('fail',x);p.value='';toast(x.until>Date.now()?'Đã khóa 5 phút':'Sai mã PIN (còn '+(5-x.n)+' lần)');build();}};
+      p.addEventListener('keydown',e=>{if(e.key==='Enter')go();});box.replaceChildren(p,h('button',{class:'btn pri',onclick:go},'Mở khóa'));setTimeout(()=>p.focus(),30);}
+    else{const p1=h('input',{type:'password',id:'np1',inputmode:'numeric',placeholder:'Đặt mã PIN mới (4–8 số)',autocomplete:'off'}),p2=h('input',{type:'password',id:'np2',inputmode:'numeric',placeholder:'Nhập lại mã PIN',autocomplete:'off'});
+      const go=()=>{if(!/^\d{4,8}$/.test(p1.value)){toast('PIN gồm 4–8 chữ số');return;}if(p1.value!==p2.value){toast('Hai lần nhập không khớp');return;}LS.set('pin',hashPin(p1.value));SS.set('ok','1');toast('Đã đặt mã PIN cho máy này');render();};
+      p2.addEventListener('keydown',e=>{if(e.key==='Enter')go();});box.replaceChildren(h('p',{class:'small muted'},'Lần đầu dùng trên máy này: đặt mã PIN.'),p1,p2,h('button',{class:'btn pri',onclick:go},'Đặt PIN và vào'));setTimeout(()=>p1.focus(),30);}};
+  let taps=0,t=null;
+  const secret=h('button',{class:'secret',type:'button','aria-label':'Phiên bản',onclick:()=>{taps++;clearTimeout(t);t=setTimeout(()=>{taps=0;},1500);if(taps>=3){taps=0;build();box.classList.remove('hide');}}},'✦');
+  return h('div',{class:'card lock wall'},(()=>{const d=h('div',{class:'wall-ic'});d.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>';return d;})(),
+    h('h2',null,'Bạn không có quyền truy cập vào nội dung này'),h('p',{class:'muted small'},'Khu vực này chỉ dành cho nhân viên phòng khám.'),h('a',{class:'btn',href:'#home'},'Về trang chủ'),box,secret);}
 function billsView(){const mi=h('input',{type:'month',id:'bm',value:billMonth,style:'max-width:180px',onchange:e=>{billMonth=e.target.value||today().slice(0,7);render();}});
   const list=D.bills.filter(b=>monthOf(b.date)===billMonth).sort((a,b)=>(b.date||'').localeCompare(a.date||'')||(b.createdAt||0)-(a.createdAt||0));
   const t=list.reduce((s,b)=>{const c=billCalc(b);s.total+=c.total;s.paid+=c.paid;s.profit+=c.profit;return s;},{total:0,paid:0,profit:0});
@@ -368,9 +386,9 @@ function dataView(){const hasPin=!!LS.get('pin',null);const last=LS.get('lastBac
         const a=h('a',{href:URL.createObjectURL(blob),download:'sao-luu-tinh-tien-'+today()+'.json'});document.body.append(a);a.click();a.remove();LS.set('lastBackup',today());toast('Đã tải bản sao lưu');setTimeout(render,300);}},'Tải bản sao lưu'),
         h('button',{class:'btn',onclick:()=>file.click()},'Khôi phục từ tệp'),file),
       h('p',{class:'small muted'},'Muốn dùng trên máy khác: tải sao lưu ở máy này, mở trang ở máy kia rồi chọn "Khôi phục từ tệp".')),
-    h('div',{class:'card'},h('h3',null,'Mã PIN khu bác sĩ'),h('p',{class:'small muted'},'Khi có người khác dùng chung máy, mã PIN giúp họ không mở được trang tính tiền. Khách xem web trên điện thoại của họ không thấy dữ liệu của anh.'),
+    h('div',{class:'card'},h('h3',null,'Mã PIN khu bác sĩ'),h('p',{class:'small muted'},'Mỗi máy có mã PIN riêng. Dữ liệu tính tiền cũng nằm riêng trên từng máy.'),
       h('div',{class:'row'},h('div',{style:'max-width:200px'},p1),h('button',{class:'btn',onclick:()=>{if(!/^\d{4,8}$/.test(p1.value)){toast('PIN gồm 4–8 chữ số');return;}LS.set('pin',hashPin(p1.value));SS.set('ok','1');toast('Đã đặt mã PIN');render();}},hasPin?'Đổi PIN':'Đặt PIN')),
-      hasPin?h('div',{class:'row'},h('button',{class:'btn sm',onclick:()=>{SS.set('ok','0');render();}},'Khóa ngay'),h('button',{class:'btn sm danger',onclick:()=>confirmBox('Bỏ mã PIN?','Bỏ PIN',()=>{try{localStorage.removeItem('bshh:pin');}catch(e){}toast('Đã bỏ PIN');render();})},'Bỏ PIN')):null))];}
+      h('p',{class:'small muted'},'Người khác bấm vào Khu bác sĩ chỉ thấy thông báo không có quyền truy cập. Ô nhập PIN chỉ hiện khi bấm 3 lần liên tiếp vào ký hiệu ✦ ở góc dưới bên phải thông báo.')))];}
 
 render();
 </script>
