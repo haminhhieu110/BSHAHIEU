@@ -15,7 +15,7 @@ window.SITE = {
   address: "Thành phố Hồ Chí Minh",      // ví dụ: "Thành phố Hồ Chí Minh"
   hours: "9:00 – 21:00, Thứ 2 – Chủ nhật",        // ví dụ: "9:00 – 21:00, Thứ 2 – Chủ nhật"
   headline: "Thẩm mỹ an toàn, theo dõi từng buổi",
-  intro: "Tư vấn và điều trị thẩm mỹ bởi bác sĩ ngoại khoa chuyên ngành phẫu thuật tạo hình. Mỗi khách hàng được thăm khám kỹ, giải thích rõ phác đồ và được hẹn tái khám đúng lịch."
+  intro: "Tư vấn và điều trị bởi bác sĩ Chuyên khoa. Mỗi khách hàng được thăm khám kỹ, giải thích rõ phác đồ và được hẹn tái khám đúng lịch."
 };
 
 /* 2. BẢNG GIÁ CÔNG KHAI (khách xem được — KHÔNG ghi giá vốn ở đây)
