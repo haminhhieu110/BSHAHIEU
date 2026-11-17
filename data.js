@@ -11,7 +11,7 @@ window.SITE = {
   doctor: "BS. Hà Hiếu",
   spec: "Bác sĩ Chuyên khoa · Tư vấn chuyên môn tạo hình thẩm mỹ",
   phone: "0336 891 053",        // ví dụ: "0336 891 053"
-  zalo: "0336891053",         // ví dụ: "0336891053"
+  zalo: "",         // ví dụ: "0336891053"
   address: "Thành phố Hồ Chí Minh",      // ví dụ: "Thành phố Hồ Chí Minh"
   hours: "9:00 – 21:00, Thứ 2 – Chủ nhật",        // ví dụ: "9:00 – 21:00, Thứ 2 – Chủ nhật"
   headline: "Thẩm mỹ an toàn, theo dõi từng buổi",
