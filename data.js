@@ -6,6 +6,8 @@
 
 /* 1. THÔNG TIN PHÒNG KHÁM (hiện ở trang chủ và trên phiếu thu) */
 window.SITE = {
+     logo: "anh/profile.jpeg",
+  cover: "anh/cover.jpeg",
   name: "BS. Hà Hiếu",
   sub: "Phẫu thuật tạo hình thẩm mỹ",
   doctor: "BS. Hà Hiếu",
