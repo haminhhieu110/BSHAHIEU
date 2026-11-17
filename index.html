@@ -60,9 +60,9 @@ main{max-width:1120px;margin:0 auto;padding:22px 16px 50px;display:flex;flex-dir
 .card-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
 .grid{display:grid;gap:14px}
 .g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
-.g3{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
-.g4{grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
-.tile{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;display:flex;flex-direction:column;gap:2px}
+.g3{grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+.g4{grid-template-columns:repeat(auto-fill,minmax(180px,1fr))}
+.tile{overflow:hidden;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;display:flex;flex-direction:column;gap:2px}
 .tile .lab{font-size:13px;color:var(--muted)}
 .tile .val{font-family:var(--font-display);font-size:22px;font-weight:600;font-variant-numeric:tabular-nums}
 .tile.good .val{color:var(--good)} .tile.bad .val{color:var(--bad)}
@@ -119,6 +119,15 @@ td input{padding:5px 7px}
 .prose{max-width:68ch;display:flex;flex-direction:column;gap:12px;font-size:16px}
 .prose h2{font-size:20px;margin-top:10px} .prose h3{font-size:17px;margin-top:6px}
 .prose ul{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:4px}
+.cover{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:8px;background:var(--surface-2);display:block}
+.article-card{padding:0;overflow:hidden;gap:0}
+.article-card .ac-body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:8px}
+.article-card .cover{border-radius:0}
+.prose figure{margin:6px 0;display:flex;flex-direction:column;gap:6px}
+.prose figure img{width:100%;border-radius:8px;border:1px solid var(--line)}
+.prose figcaption{font-size:13px;color:var(--muted);text-align:center}
+.price-thumb{width:56px;height:56px;object-fit:cover;border-radius:8px;flex:none;border:1px solid var(--line)}
+.tile .tile-img{width:calc(100% + 32px);max-width:none;margin:-14px -16px 8px;aspect-ratio:4/3;object-fit:cover;border-radius:var(--r) var(--r) 0 0;display:block}
 .note-box{background:var(--warn-soft);border-radius:8px;padding:10px 12px;font-size:13px}
 .price-row{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px dashed var(--line)}
 .price-row:last-child{border-bottom:none}
@@ -195,7 +204,7 @@ function confirmBox(msg,ok,fn){const m=modal('Xác nhận',h('p',null,msg),[h('b
 
 /* ============ Dữ liệu tính tiền (lưu trong trình duyệt của máy này) ============ */
 const D={services:LS.get('services',null),bills:LS.get('bills',[])};
-if(!D.services){D.services=PRICES.map(p=>({id:uid(),name:p.name,group:p.group||'',unit:p.unit||'',price:+p.price||0,cost:0,public:true,note:p.note||''}));}
+if(!D.services){D.services=PRICES.map(p=>({id:uid(),name:p.name,group:p.group||'',unit:p.unit||'',price:+p.price||0,cost:0,public:true,note:p.note||'',image:p.image||''}));}
 const saveServices=()=>LS.set('services',D.services);const saveBills=()=>LS.set('bills',D.bills);
 const billCalc=b=>{const sub=(b.lines||[]).reduce((s,l)=>s+(+l.price||0)*(+l.qty||0),0);const cost=(b.lines||[]).reduce((s,l)=>s+(+l.cost||0)*(+l.qty||0),0);
   const disc=Math.min(sub,+b.discount||0);const total=sub-disc;const paid=(b.payments||[]).reduce((s,p)=>s+(+p.amount||0),0);return {sub,cost,disc,total,paid,due:Math.max(0,total-paid),profit:total-cost};};
@@ -216,12 +225,13 @@ const inline=t=>String(t).split(/(\*\*[^*]+\*\*)/g).map(p=>p.startsWith('**')&&p
 function md(text){const out=[];let ul=null,para=[];const flush=()=>{if(para.length){out.push(h('p',null,inline(para.join(' '))));para=[];}};
   for(const raw of String(text||'').split('\n')){const l=raw.trim();if(!l){flush();ul=null;continue;}
     if(/^#{1,3}\s/.test(l)){flush();ul=null;out.push(h(l.startsWith('###')?'h3':'h2',null,l.replace(/^#+\s*/,'')));continue;}
+    const im=l.match(/^!\[(.*?)\]\((\S+?)\)$/);if(im){flush();ul=null;out.push(h('figure',null,h('img',{src:im[2],alt:im[1]||'Ảnh minh họa',loading:'lazy'}),im[1]?h('figcaption',null,im[1]):null));continue;}
     if(/^[-*•]\s/.test(l)){flush();if(!ul){ul=h('ul');out.push(ul);}ul.append(h('li',null,inline(l.replace(/^[-*•]\s*/,''))));continue;}
     ul=null;para.push(l);}flush();return out;}
 
 /* ============ Trang công khai ============ */
 const sortedArticles=()=>[...ARTICLES].sort((a,b)=>(b.date||'').localeCompare(a.date||''));
-const articleCard=a=>h('a',{class:'card article-card',href:'#bai-'+a.id},h('span',{class:'tag'},a.topic||'Kiến thức'),h('h3',null,a.title),h('p',{class:'small muted'},a.summary||''));
+const articleCard=a=>h('a',{class:'card article-card',href:'#bai-'+a.id},a.image?h('img',{class:'cover',src:a.image,alt:'',loading:'lazy'}):null,h('div',{class:'ac-body'},h('span',{class:'tag'},a.topic||'Kiến thức'),h('h3',null,a.title),h('p',{class:'small muted'},a.summary||'')));
 function vHome(){const info=[['Bác sĩ',SITE.doctor],['Chuyên môn',SITE.spec],['Điện thoại',SITE.phone],['Zalo',SITE.zalo],['Địa chỉ',SITE.address],['Giờ khám',SITE.hours]].filter(x=>x[1]);
   const out=[h('section',{class:'hero'},h('div',null,h('h1',null,SITE.headline||'Thẩm mỹ an toàn'),h('p',{class:'lead'},SITE.intro||''),
       h('div',{class:'row',style:'margin-top:16px'},h('a',{class:'btn pri',href:'#kien-thuc'},'Đọc kiến thức'),h('a',{class:'btn',href:'#bang-gia'},'Xem bảng giá'),SITE.phone?h('a',{class:'btn',href:'tel:'+SITE.phone.replace(/\s/g,'')},'Gọi '+SITE.phone):null)),
@@ -229,7 +239,7 @@ function vHome(){const info=[['Bác sĩ',SITE.doctor],['Chuyên môn',SITE.spec]
     h('div',{class:'page-head'},h('h2',null,'Bài viết mới'),h('a',{href:'#kien-thuc'},'Xem tất cả')),
     ARTICLES.length?h('div',{class:'grid g3'},sortedArticles().slice(0,3).map(articleCard)):h('div',{class:'empty'},'Chưa có bài viết.')];
   if(PRICES.length)out.push(h('div',{class:'page-head'},h('h2',null,'Dịch vụ'),h('a',{href:'#bang-gia'},'Bảng giá đầy đủ')),
-    h('div',{class:'grid g4'},PRICES.slice(0,8).map(p=>h('div',{class:'tile'},h('span',{class:'lab'},p.group||'Dịch vụ'),h('b',null,p.name),h('span',{class:'num',style:'color:var(--accent);font-weight:600'},p.price?fmt(p.price):'Liên hệ')))));
+    h('div',{class:'grid g4'},PRICES.slice(0,8).map(p=>h('div',{class:'tile'},p.image?h('img',{class:'tile-img',src:p.image,alt:p.name,loading:'lazy'}):null,h('span',{class:'lab'},p.group||'Dịch vụ'),h('b',null,p.name),h('span',{class:'num',style:'color:var(--accent);font-weight:600'},p.price?fmt(p.price):'Liên hệ')))));
   return out;}
 function vArticles(){const topics=[...new Set(ARTICLES.map(a=>a.topic).filter(Boolean))];let topic='',q='';
   const grid=h('div',{class:'grid g3'});const draw=()=>{const qq=norm(q);const l=sortedArticles().filter(a=>(!topic||a.topic===topic)&&(!qq||norm(a.title+' '+a.summary+' '+a.body).includes(qq)));
@@ -242,12 +252,12 @@ function vArticle(){const a=ARTICLES.find(x=>'bai-'+x.id===location.hash.slice(1
   const others=sortedArticles().filter(x=>x.id!==a.id&&x.topic===a.topic).concat(sortedArticles().filter(x=>x.id!==a.id&&x.topic!==a.topic)).slice(0,3);
   return [h('a',{class:'btn ghost',href:'#kien-thuc',style:'align-self:flex-start'},'← Tất cả bài viết'),
     h('article',{class:'card',style:'padding:24px'},h('span',{class:'pill info',style:'align-self:flex-start'},a.topic||'Kiến thức'),h('h1',null,a.title),
-      h('p',{class:'small muted'},(SITE.doctor||'')+(a.date?' · '+fmtDate(a.date):'')),h('div',{class:'prose'},md(a.body)),
+      h('p',{class:'small muted'},(SITE.doctor||'')+(a.date?' · '+fmtDate(a.date):'')),a.image?h('img',{class:'cover',src:a.image,alt:a.title,style:'max-width:68ch'}):null,h('div',{class:'prose'},md(a.body)),
       h('div',{class:'note-box'},'Bài viết mang tính tham khảo. Mỗi người có cơ địa khác nhau, hãy đến khám để bác sĩ tư vấn phù hợp.'+(SITE.phone?' Liên hệ: '+SITE.phone:''))),
     others.length?h('h2',null,'Bài viết khác'):null,others.length?h('div',{class:'grid g3'},others.map(articleCard)):null];}
 function vPrices(){const g={};PRICES.forEach(p=>{(g[p.group||'Dịch vụ khác']=g[p.group||'Dịch vụ khác']||[]).push(p);});
   return [h('div',{class:'page-head'},h('div',null,h('h1',null,'Bảng giá dịch vụ'),h('p',null,'Giá tham khảo. Giá chính xác tùy tình trạng thực tế sau khi bác sĩ thăm khám.'))),
-    PRICES.length?h('div',{class:'grid g2'},Object.entries(g).map(([k,l])=>h('div',{class:'card'},h('h3',null,k),h('div',null,l.map(p=>h('div',{class:'price-row'},h('div',null,h('div',null,p.name),p.note?h('div',{class:'small muted'},p.note):null),h('b',null,p.price?fmt(p.price)+(p.unit?' / '+p.unit:''):'Liên hệ'))))))):
+    PRICES.length?h('div',{class:'grid g2'},Object.entries(g).map(([k,l])=>h('div',{class:'card'},h('h3',null,k),h('div',null,l.map(p=>h('div',{class:'price-row'},h('div',{class:'row',style:'flex-wrap:nowrap;align-items:flex-start'},p.image?h('img',{class:'price-thumb',src:p.image,alt:p.name,loading:'lazy'}):null,h('div',null,h('div',null,p.name),p.note?h('div',{class:'small muted'},p.note):null)),h('b',null,p.price?fmt(p.price)+(p.unit?' / '+p.unit:''):'Liên hệ'))))))):
     h('div',{class:'empty'},'Bảng giá đang được cập nhật. Vui lòng liên hệ để được tư vấn.')];}
 
 /* ============ Khu bác sĩ: Tính tiền ============ */
@@ -279,7 +289,7 @@ function servicesView(){const list=[...D.services].sort((a,b)=>(a.group||'').loc
         h('td',{class:'r'},fmt(s.cost)),h('td',{class:'r'},fmt(s.price)),h('td',{class:'r'},fmt(pr)),h('td',{class:'r'},h('span',{class:'pill '+(mg>=.5?'good':mg>=.25?'info':'warn')},Math.round(mg*100)+'%')),h('td',null,s.public?h('span',{class:'pill info'},'Hiện'):h('span',{class:'pill mute'},'Ẩn')));})))):
     h('div',{class:'empty'},'Chưa có dịch vụ. Thêm dịch vụ với giá vốn (vật tư + chi phí), trang sẽ tự tính giá bán theo % lãi bạn muốn.')];}
 function exportPrices(){const items=D.services.filter(s=>s.public).sort((a,b)=>(a.group||'').localeCompare(b.group||'')||(a.name||'').localeCompare(b.name||''));
-  const code='window.PRICES = [\n'+items.map(s=>'  '+JSON.stringify({group:s.group||'',name:s.name,price:+s.price||0,unit:s.unit||'',note:s.note||''})).join(',\n')+'\n];';
+  const code='window.PRICES = [\n'+items.map(s=>'  '+JSON.stringify(Object.assign({group:s.group||'',name:s.name,price:+s.price||0,unit:s.unit||'',note:s.note||''},s.image?{image:s.image}:{}))).join(',\n')+'\n];';
   const ta=h('textarea',{style:'min-height:220px;font-family:ui-monospace,monospace;font-size:12px',readonly:true},code);
   const m=modal('Bảng giá công khai',h('div',{class:'stack'},h('p',{class:'small'},'Mở tệp data.js trên GitHub, xóa từ dòng "window.PRICES = [" đến dấu "];" ngay sau đó, rồi dán đoạn này vào. Bấm Commit là xong.'),ta),
     [h('button',{class:'btn',onclick:()=>m.close()},'Đóng'),h('button',{class:'btn pri',onclick:()=>copyText(code)},'Sao chép')],{wide:true});}
@@ -287,16 +297,16 @@ function editService(s){const isNew=!s;s=s||{public:true};
   const f={name:h('input',{type:'text',id:'s-name',value:s.name||'',placeholder:'VD: Laser toning toàn mặt'}),group:h('input',{type:'text',id:'s-group',value:s.group||'',placeholder:'VD: Laser, Filler, Phẫu thuật',list:'grp'}),
     unit:h('input',{type:'text',id:'s-unit',value:s.unit||'',placeholder:'lần, cc, buổi, gói'}),cost:h('input',{type:'text',id:'s-cost',inputmode:'decimal',value:s.cost||'',placeholder:'VD: 350k'}),
     pct:h('input',{type:'text',id:'s-pct',inputmode:'decimal',value:s.cost&&s.price?Math.round((s.price-s.cost)/s.cost*100):'',placeholder:'VD: 150'}),price:h('input',{type:'text',id:'s-price',inputmode:'decimal',value:s.price||'',placeholder:'VD: 1tr2'}),
-    note:h('input',{type:'text',id:'s-note',value:s.note||''}),pub:h('input',{type:'checkbox',id:'s-pub',checked:s.public})};
+    note:h('input',{type:'text',id:'s-note',value:s.note||''}),image:h('input',{type:'text',id:'s-img',value:s.image||'',placeholder:'VD: anh/laser-toning.jpg'}),pub:h('input',{type:'checkbox',id:'s-pub',checked:s.public})};
   const out=h('div',{class:'totals'});
   const calc=from=>{const c=parseMoney(f.cost.value);if(from==='pct'&&c)f.price.value=Math.round(c*(1+parseMoney(f.pct.value)/100)/1000)*1000;const p=parseMoney(f.price.value);if(from!=='pct'&&c&&p)f.pct.value=Math.round((p-c)/c*100);
     out.replaceChildren(h('span',null,'Giá vốn'),h('span',{class:'r'},fmt(c)),h('span',null,'Giá bán'),h('span',{class:'r'},fmt(p)),h('span',{class:'big'},'Lãi mỗi lần'),h('span',{class:'r big',style:'color:'+(p-c>=0?'var(--good)':'var(--bad)')},fmt(p-c)),h('span',null,'Biên lãi trên giá bán'),h('span',{class:'r'},p?Math.round((p-c)/p*100)+'%':'—'));};
   f.cost.addEventListener('input',()=>calc('cost'));f.pct.addEventListener('input',()=>calc('pct'));f.price.addEventListener('input',()=>calc('price'));calc();
   const m=modal(isNew?'Thêm dịch vụ':'Sửa dịch vụ',h('div',{class:'stack'},h('datalist',{id:'grp'},[...new Set(D.services.map(x=>x.group).filter(Boolean))].map(g=>h('option',{value:g}))),
     h('div',{class:'fgrid'},h('label',{class:'f full'},'Tên dịch vụ *',f.name),h('label',{class:'f'},'Nhóm',f.group),h('label',{class:'f'},'Đơn vị',f.unit),h('label',{class:'f'},'Giá vốn (vật tư + chi phí)',f.cost),h('label',{class:'f'},'% lãi trên giá vốn',f.pct),h('label',{class:'f'},'Giá bán',f.price),
-      h('label',{class:'f full'},'Ghi chú hiện trên bảng giá',f.note),h('label',{class:'f inline full'},f.pub,'Đưa vào bảng giá công khai')),out,h('p',{class:'small muted'},'Gõ tắt được: 350k, 1tr2, 2.5tr.')),
+      h('label',{class:'f full'},'Ghi chú hiện trên bảng giá',f.note),h('label',{class:'f full'},'Ảnh (đường dẫn tệp ảnh đã tải lên GitHub, có thể để trống)',f.image),h('label',{class:'f inline full'},f.pub,'Đưa vào bảng giá công khai')),out,h('p',{class:'small muted'},'Gõ tắt được: 350k, 1tr2, 2.5tr.')),
     [!isNew?h('button',{class:'btn danger',onclick:()=>confirmBox('Xóa dịch vụ '+s.name+'?','Xóa',()=>{D.services=D.services.filter(x=>x.id!==s.id);saveServices();m.close();render();})},'Xóa'):null,h('span',{class:'spacer'}),h('button',{class:'btn',onclick:()=>m.close()},'Hủy'),
-     h('button',{class:'btn pri',onclick:()=>{if(!f.name.value.trim()){toast('Cần tên dịch vụ');return;}const d={id:s.id||uid(),name:f.name.value.trim(),group:f.group.value.trim(),unit:f.unit.value.trim(),cost:parseMoney(f.cost.value),price:parseMoney(f.price.value),note:f.note.value.trim(),public:f.pub.checked};
+     h('button',{class:'btn pri',onclick:()=>{if(!f.name.value.trim()){toast('Cần tên dịch vụ');return;}const d={id:s.id||uid(),name:f.name.value.trim(),group:f.group.value.trim(),unit:f.unit.value.trim(),cost:parseMoney(f.cost.value),price:parseMoney(f.price.value),note:f.note.value.trim(),image:f.image.value.trim(),public:f.pub.checked};
        D.services=D.services.filter(x=>x.id!==d.id).concat([d]);saveServices();m.close();toast('Đã lưu dịch vụ');render();}},'Lưu')]);setTimeout(()=>f.name.focus(),30);}
 function nextBillNo(date){const p='HD'+date.replace(/-/g,'').slice(2);const n=D.bills.filter(b=>(b.no||'').startsWith(p)).length+1;return p+'-'+String(n).padStart(2,'0');}
 function editBill(b){const isNew=!b;b=b?JSON.parse(JSON.stringify(b)):{date:today(),lines:[],payments:[]};const lines=b.lines;
