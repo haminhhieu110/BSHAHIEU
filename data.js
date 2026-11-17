@@ -9,12 +9,12 @@ window.SITE = {
   name: "BS. Hà Hiếu",
   sub: "Phẫu thuật tạo hình thẩm mỹ",
   doctor: "BS. Hà Hiếu",
-  spec: "Bác sĩ ngoại khoa · Học viên CKI Phẫu thuật tạo hình thẩm mỹ",
-  phone: "",        // ví dụ: "0909 123 456"
-  zalo: "",         // ví dụ: "0909123456"
-  address: "",      // ví dụ: "123 Đường ABC, Quận X, TP.HCM"
-  hours: "",        // ví dụ: "8:00 – 19:00, Thứ 2 – Chủ nhật"
-  headline: "Thẩm mỹ an toàn, theo dõi kỹ từng buổi",
+  spec: "Bác sĩ ngoại khoa · Tư vấn chuyên môn tạo hình thẩm mỹ",
+  phone: "",        // ví dụ: "0336 891 053"
+  zalo: "",         // ví dụ: "0336891053"
+  address: "",      // ví dụ: "Thành phố Hồ Chí Minh"
+  hours: "",        // ví dụ: "9:00 – 21:00, Thứ 2 – Chủ nhật"
+  headline: "Thẩm mỹ an toàn, theo dõi từng buổi",
   intro: "Tư vấn và điều trị thẩm mỹ bởi bác sĩ ngoại khoa chuyên ngành phẫu thuật tạo hình. Mỗi khách hàng được thăm khám kỹ, giải thích rõ phác đồ và được hẹn tái khám đúng lịch."
 };
 
