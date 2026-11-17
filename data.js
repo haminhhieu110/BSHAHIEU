@@ -22,7 +22,8 @@ window.SITE = {
    Cách nhanh nhất: vào trang Tính tiền → Dịch vụ → bấm "Xuất bảng giá công khai",
    rồi dán đoạn mã nhận được vào thay cho phần bên dưới. */
 window.PRICES = [
-  {"group":"Da liễu","name":"Kem dưỡng HA Usolab","price":990000,"unit":"Hộp","note":""}
+  {"group":"Da liễu","name":"Kem dưỡng HA Usolab","price":990000,"unit":"Hộp","note":""},
+  {"group":"Laser","name":"Laser điều trị sắc tố","price":3500000,"unit":"Buổi","note":"Bao gồm: Nám, tàn nhang, thâm sạm da, bớt sắc tố,..."}
 ];
 
 /* 3. BÀI VIẾT KIẾN THỨC
