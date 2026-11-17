@@ -46,6 +46,8 @@ header.top{position:sticky;top:0;z-index:20;background:var(--surface);border-bot
 .top-in{max-width:1120px;margin:0 auto;padding:10px 16px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
 .brand{display:flex;gap:10px;align-items:center;text-decoration:none;color:var(--ink)}
 .brand-mark{width:34px;height:34px;border-radius:9px;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font-family:var(--font-display);font-weight:700;font-size:15px}
+.brand-logo{width:38px;height:38px;border-radius:50%;object-fit:cover;border:1px solid var(--line);flex:none}
+.hero-photo{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:10px;display:block}
 .brand b{font-family:var(--font-display);font-size:16px;display:block}
 .brand span{font-size:12px;color:var(--muted)}
 nav.nav{display:flex;gap:4px;overflow-x:auto;margin-left:auto;align-items:center}
@@ -170,7 +172,7 @@ footer a{color:var(--muted)}
 </head>
 <body>
 <header class="top"><div class="top-in">
-  <a class="brand" href="#home"><div class="brand-mark">HH</div><div><b id="brandName"></b><span id="brandSub"></span></div></a>
+  <a class="brand" href="#home"><div class="brand-mark" id="brandMark">HH</div><div><b id="brandName"></b><span id="brandSub"></span></div></a>
   <nav class="nav" id="nav"></nav>
 </div></header>
 <main id="main"></main>
@@ -220,6 +222,8 @@ const billCalc=b=>{const sub=(b.lines||[]).reduce((s,l)=>s+(+l.price||0)*(+l.qty
 const ROUTES=[['home','Trang chủ'],['kien-thuc','Kiến thức'],['bang-gia','Bảng giá']];
 const unlocked=()=>!!LS.get('pin',null)&&SS.get('ok')==='1';
 function route(){const r=(location.hash||'#home').slice(1);if(r.startsWith('bai-'))return 'bai';return ['home','kien-thuc','bang-gia','tinh-tien'].includes(r)?r:'home';}
+function applyBrand(){if(!SITE.logo)return;const m=$('#brandMark');if(m)m.replaceWith(h('img',{class:'brand-logo',src:SITE.logo,alt:SITE.name||''}));
+  let l=document.querySelector('link[rel=icon]');if(!l){l=h('link',{rel:'icon'});document.head.append(l);}l.href=SITE.logo;}
 function render(){const r=route();$('#brandName').textContent=SITE.name||'BS. Hà Hiếu';$('#brandSub').textContent=SITE.sub||'';
   const nav=$('#nav');nav.replaceChildren(...ROUTES.map(([k,l])=>h('a',{href:'#'+k,class:(r===k||(r==='bai'&&k==='kien-thuc'))?'on':''},l)));if(r==='tinh-tien'&&unlocked())nav.append(h('a',{href:'#tinh-tien',class:'on'},'Tính tiền'));
   const v={home:vHome,'kien-thuc':vArticles,bai:vArticle,'bang-gia':vPrices,'tinh-tien':vBilling}[r];
@@ -242,7 +246,7 @@ const articleCard=a=>h('a',{class:'card article-card',href:'#bai-'+a.id},a.image
 function vHome(){const info=[['Bác sĩ',SITE.doctor],['Chuyên môn',SITE.spec],['Điện thoại',SITE.phone],['Zalo',SITE.zalo],['Địa chỉ',SITE.address],['Giờ khám',SITE.hours]].filter(x=>x[1]);
   const out=[h('section',{class:'hero'},h('div',null,h('h1',null,SITE.headline||'Thẩm mỹ an toàn'),h('p',{class:'lead'},SITE.intro||''),
       h('div',{class:'row',style:'margin-top:16px'},h('a',{class:'btn pri',href:'#kien-thuc'},'Đọc kiến thức'),h('a',{class:'btn',href:'#bang-gia'},'Xem bảng giá'),SITE.phone?h('a',{class:'btn',href:'tel:'+SITE.phone.replace(/\s/g,'')},'Gọi '+SITE.phone):null)),
-    h('div',{class:'hero-side'},info.map(([k,v])=>h('div',null,h('b',null,k),h('span',null,v))))),
+    h('div',{class:'stack'},SITE.cover?h('img',{class:'hero-photo',src:SITE.cover,alt:SITE.doctor||SITE.name||''}):null,info.length?h('div',{class:'hero-side'},info.map(([k,v])=>h('div',null,h('b',null,k),h('span',null,v)))):null)),
     h('div',{class:'page-head'},h('h2',null,'Bài viết mới'),h('a',{href:'#kien-thuc'},'Xem tất cả')),
     ARTICLES.length?h('div',{class:'grid g3'},sortedArticles().slice(0,3).map(articleCard)):h('div',{class:'empty'},'Chưa có bài viết.')];
   if(PRICES.length)out.push(h('div',{class:'page-head'},h('h2',null,'Dịch vụ'),h('a',{href:'#bang-gia'},'Bảng giá đầy đủ')),
@@ -390,7 +394,7 @@ function dataView(){const hasPin=!!LS.get('pin',null);const last=LS.get('lastBac
       h('div',{class:'row'},h('div',{style:'max-width:200px'},p1),h('button',{class:'btn',onclick:()=>{if(!/^\d{4,8}$/.test(p1.value)){toast('PIN gồm 4–8 chữ số');return;}LS.set('pin',hashPin(p1.value));SS.set('ok','1');toast('Đã đặt mã PIN');render();}},hasPin?'Đổi PIN':'Đặt PIN')),
       h('p',{class:'small muted'},'Người khác bấm vào Khu bác sĩ chỉ thấy thông báo không có quyền truy cập. Ô nhập PIN chỉ hiện khi bấm 3 lần liên tiếp vào ký hiệu ✦ ở góc dưới bên phải thông báo.')))];}
 
-render();
+applyBrand();render();
 </script>
 </body>
 </html>
